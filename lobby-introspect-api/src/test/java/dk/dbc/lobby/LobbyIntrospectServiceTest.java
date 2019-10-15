@@ -1,11 +1,11 @@
-package dk.dbc.example;
+package dk.dbc.lobby;
 
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class PayaraReactServiceTest {
+public class LobbyIntrospectServiceTest {
 
     @Test
     public void testDummy() {
