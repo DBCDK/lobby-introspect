@@ -1,0 +1,3 @@
+echo "### Stopping lobby-introspect service docker ###"
+
+docker stop lobby-introspect-service || exit 1

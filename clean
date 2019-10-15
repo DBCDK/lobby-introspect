@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo "### cleaning lobby-introspect project ###"
+
+mvn clean
+git pull --ff-only
+docker rm -f lobby-introspect-service &>/dev/null || true
+exit 0
