@@ -3,7 +3,7 @@
  *  See license text at https://opensource.dbc.dk/licenses/gpl-3.0
  */
 
-package dk.dbc.example.rest;
+package dk.dbc.lobby.rest;
 
 import dk.dbc.serviceutils.ServiceStatus;
 

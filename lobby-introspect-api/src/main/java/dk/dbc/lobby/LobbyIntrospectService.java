@@ -1,4 +1,4 @@
-package dk.dbc.example;
+package dk.dbc.lobby;
 
 import dk.dbc.util.StopwatchInterceptor;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 @Path("")
 public class LobbyIntrospectService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(dk.dbc.example.LobbyIntrospectService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LobbyIntrospectService.class);
 
     @Inject
     @ConfigProperty(name = "INSTANCE", defaultValue = "")

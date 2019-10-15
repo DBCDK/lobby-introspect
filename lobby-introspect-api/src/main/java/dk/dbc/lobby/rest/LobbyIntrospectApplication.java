@@ -1,4 +1,6 @@
-package dk.dbc.example.rest;
+package dk.dbc.lobby.rest;
+
+import dk.dbc.lobby.LobbyIntrospectService;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -10,7 +12,7 @@ public class LobbyIntrospectApplication extends Application {
     private static final Set<Class<?>> classes = new HashSet<>();
 
     static {
-        classes.add(dk.dbc.example.LobbyIntrospectService.class);
+        classes.add(LobbyIntrospectService.class);
         classes.add(Status.class);
     }
 
