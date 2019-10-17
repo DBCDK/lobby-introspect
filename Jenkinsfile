@@ -17,6 +17,11 @@ pipeline {
         timestamps()
         disableConcurrentBuilds()
     }
+    environment {
+        DOCKER_IMAGE_NAME = "docker-io.dbc.dk/lobby-introspect"
+        DOCKER_IMAGE_VERSION = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+        DOCKER_IMAGE_DIT_VERSION = "DIT-${env.BUILD_NUMBER}"
+    }
     stages {
         stage("clear workspace") {
             steps {
@@ -52,11 +57,21 @@ pipeline {
         }
         stage("docker push") {
             when {
-                branch "master"
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
             }
             steps {
                 script {
-                    docker.image("docker-io.dbc.dk/lobby-introspect:${env.BRANCH_NAME}-${env.BUILD_NUMBER}").push()
+                    def image = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION}")
+                    image.push()
+
+                    if (env.BRANCH_NAME == 'master') {
+                        sh """
+                            docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_VERSION} ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_DIT_VERSION}
+                            docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_DIT_VERSION}
+                        """
+                    }
                 }
             }
         }
