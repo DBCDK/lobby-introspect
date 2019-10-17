@@ -21,6 +21,7 @@ pipeline {
         DOCKER_IMAGE_NAME = "docker-io.dbc.dk/lobby-introspect-service"
         DOCKER_IMAGE_VERSION = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
         DOCKER_IMAGE_DIT_VERSION = "DIT-${env.BUILD_NUMBER}"
+        GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
     }
     stages {
         stage("clear workspace") {
@@ -72,6 +73,25 @@ pipeline {
                             docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_DIT_VERSION}
                         """
                     }
+                }
+            }
+        }
+        stage("bump docker tag in lobby-secrets") {
+            agent {
+                docker {
+                    label workerNode
+                    image "docker.dbc.dk/build-env:latest"
+                    alwaysPull true
+                }
+            }
+            when {
+                branch "master"
+            }
+            steps {
+                script {
+                    sh """  
+                        set-new-version services/introspect.yml ${env.GITLAB_PRIVATE_TOKEN} metascrum/lobby-secrets ${DOCKER_IMAGE_DIT_VERSION} -b staging
+                    """
                 }
             }
         }
