@@ -123,7 +123,7 @@ class LobbyIntrospectGUI extends React.Component {
                     <ApplicantsList
                         category={this.state.category}
                         applicationState={this.state.applicantState}
-                        applicants={this.state.applicants}/>}
+                        applicants={this.state.applicants}/>
                 </div>
             </div>
         )
