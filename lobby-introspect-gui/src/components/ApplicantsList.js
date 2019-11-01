@@ -15,6 +15,7 @@ class ApplicantsList extends React.Component {
         this.dateFormatter = this.dateFormatter.bind(this);
         this.additionalInfoLocalIdFormatter = this.additionalInfoLocalIdFormatter.bind(this);
         this.additionalInfoErrorsFormatter = this.additionalInfoErrorsFormatter.bind(this);
+        this.additionalInfoOriginalId = this.additionalInfoOriginalId.bind(this);
     }
 
     linkFormatter(cell) {
@@ -22,11 +23,27 @@ class ApplicantsList extends React.Component {
     }
 
     additionalInfoLocalIdFormatter(cell) {
-        return cell.localId;
+        if (cell !== undefined && cell.localId !== undefined) {
+            return cell.localId;
+        } else {
+            return '';
+        }
     }
 
     additionalInfoErrorsFormatter(cell) {
-        return cell.errors;
+        if (cell !== undefined && cell.errors !== undefined) {
+            return cell.errors;
+        } else {
+            return '';
+        }
+    }
+
+    additionalInfoOriginalId(cell) {
+        if (cell !== undefined && cell.originalId !== undefined) {
+            return cell.originalId;
+        } else {
+            return '';
+        }
     }
 
     dateFormatter(cell) {
@@ -57,15 +74,18 @@ class ApplicantsList extends React.Component {
                                        dataSort>Id</TableHeaderColumn>
                     {this.props.category === '' ? // Hide category if a category is specified
                         <TableHeaderColumn dataField='category'>Kategori</TableHeaderColumn> : null}
-                    <TableHeaderColumn dataField='mimetype'>Mimetype</TableHeaderColumn>
                     <TableHeaderColumn dataField='state'>Status</TableHeaderColumn>
                     <TableHeaderColumn dataField='timeOfLastModification'
                                        dataSort
                                        dataFormat={this.dateFormatter}>Ajour</TableHeaderColumn>
-                    {this.props.category === 'bpf' ?
+                    {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
                                            dataFormat={this.additionalInfoLocalIdFormatter}>Lokal id</TableHeaderColumn> : null}
-                    {this.props.category === 'bpf' ?
+                    {this.props.category === 'dpf' ?
+                        <TableHeaderColumn dataField='additionalInfo'
+                                           dataFormat={this.additionalInfoOriginalId}>Original
+                            Id</TableHeaderColumn> : null}
+                    {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
                                            dataFormat={this.additionalInfoErrorsFormatter}>Fejl</TableHeaderColumn> : null}
                     <TableHeaderColumn dataField='bodyLink'
