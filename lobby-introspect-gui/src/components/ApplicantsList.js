@@ -11,20 +11,33 @@ class ApplicantsList extends React.Component {
     constructor(props) {
         super(props);
 
-        this.linkFormatter = this.linkFormatter.bind(this);
+        this.linkFormatterBody = this.linkFormatterBody.bind(this);
+        this.linkFormatterDelete = this.linkFormatterDelete.bind(this);
         this.dateFormatter = this.dateFormatter.bind(this);
-        this.additionalInfoLocalIdFormatter = this.additionalInfoLocalIdFormatter.bind(this);
+        this.additionalInfoTitleIdFormatter = this.additionalInfoTitleIdFormatter.bind(this);
         this.additionalInfoErrorsFormatter = this.additionalInfoErrorsFormatter.bind(this);
         this.additionalInfoOriginalId = this.additionalInfoOriginalId.bind(this);
     }
 
-    linkFormatter(cell) {
-        return `<a href='${cell}' target="_blank">Link</a>`
+    linkFormatterBody(cell) {
+        let url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/body';
+        if (this.props.dbckatMode) {
+            url = url.replace('http', 'dbckat')
+        }
+        return `<a href='${url}' target="_blank">Link</a>`
     }
 
-    additionalInfoLocalIdFormatter(cell) {
-        if (cell !== undefined && cell.localId !== undefined) {
-            return cell.localId;
+    linkFormatterDelete(cell) {
+        let url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/state';
+        if (this.props.dbckatMode) {
+            url = url.replace('http', 'dbckat')
+        }
+        return `<a href='${url}' target="_blank">Link</a>`
+    }
+
+    additionalInfoTitleIdFormatter(cell) {
+        if (cell !== undefined && cell.title !== undefined) {
+            return cell.title;
         } else {
             return '';
         }
@@ -39,8 +52,8 @@ class ApplicantsList extends React.Component {
     }
 
     additionalInfoOriginalId(cell) {
-        if (cell !== undefined && cell.originalId !== undefined) {
-            return cell.originalId;
+        if (cell !== undefined && cell.originalRecordId !== undefined) {
+            return cell.originalRecordId;
         } else {
             return '';
         }
@@ -68,6 +81,7 @@ class ApplicantsList extends React.Component {
                 <p>Filter: Kategori = <b>{this.props.category === '' ? 'Alle' : this.props.category}</b> | Status
                     = <b>{this.props.applicationState}</b></p>
                 <BootstrapTable data={this.props.applicants}
+                                striped={true}
                                 options={{noDataText: 'Nope'}}>
                     <TableHeaderColumn dataField='id'
                                        isKey={true}
@@ -80,7 +94,7 @@ class ApplicantsList extends React.Component {
                                        dataFormat={this.dateFormatter}>Ajour</TableHeaderColumn>
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
-                                           dataFormat={this.additionalInfoLocalIdFormatter}>Lokal id</TableHeaderColumn> : null}
+                                           dataFormat={this.additionalInfoTitleIdFormatter}>Titel</TableHeaderColumn> : null}
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
                                            dataFormat={this.additionalInfoOriginalId}>Original
@@ -88,8 +102,11 @@ class ApplicantsList extends React.Component {
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
                                            dataFormat={this.additionalInfoErrorsFormatter}>Fejl</TableHeaderColumn> : null}
-                    <TableHeaderColumn dataField='bodyLink'
-                                       dataFormat={this.linkFormatter}>Post</TableHeaderColumn>
+                    <TableHeaderColumn dataField='id'
+                                       dataFormat={this.linkFormatterBody}>Post</TableHeaderColumn>
+                    {this.props.dbckatMode ?
+                    <TableHeaderColumn dataField='id'
+                                       dataFormat={this.linkFormatterDelete}>Slet</TableHeaderColumn> : null }
                 </BootstrapTable>
             </div>
         )

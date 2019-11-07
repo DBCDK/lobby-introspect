@@ -16,14 +16,16 @@ class LobbyIntrospectGUI extends React.Component {
 
         this.state = {
             instance: '',
+            lobbyServiceUrl: '',
             category: '',
             applicantState: 'PENDING', // Calling it 'state' could lead to confusion
             applicants: [],
-            showHeader: true
+            dbckatMode: false
         };
 
-        this.setShowHeader = this.setShowHeader.bind(this);
+        this.setDBCKatMode = this.setDBCKatMode.bind(this);
         this.getInstance = this.getInstance.bind(this);
+        this.getLobbyServiceUrl = this.getLobbyServiceUrl.bind(this);
         this.getApplicants = this.getApplicants.bind(this);
         this.getURLParams = this.getURLParams.bind(this);
     }
@@ -41,20 +43,24 @@ class LobbyIntrospectGUI extends React.Component {
             applicantState = this.state.applicantState;
         }
 
-        let showHeader = queryParams.showHeader;
-        if (showHeader !== undefined) {
-            this.setShowHeader(showHeader);
+        let dbckatMode = queryParams.dbckat;
+        if (dbckatMode !== undefined) {
+            this.setDBCKatMode(dbckatMode);
         }
 
         if (this.state.instance === '') {
             this.getInstance();
         }
 
+        if (this.state.lobbyServiceUrl === '') {
+            this.getLobbyServiceUrl();
+        }
+
         this.getApplicants(category, applicantState);
     }
 
-    setShowHeader(showHeader) {
-        this.setState({showHeader: showHeader !== 'false'})
+    setDBCKatMode(dbckatMode) {
+        this.setState({dbckatMode: dbckatMode !== 'false'})
     }
 
     getInstance() {
@@ -67,6 +73,21 @@ class LobbyIntrospectGUI extends React.Component {
                     instance: instance
                 });
                 document.title = "Lobby Introspect " + instance;
+            })
+            .catch(err => {
+                alert(err.message);
+            });
+    }
+
+    getLobbyServiceUrl() {
+        request
+            .get('/api/v1/lobby')
+            .set('Content-Type', 'text/plain')
+            .then(res => {
+                const url = res.text;
+                this.setState({
+                    lobbyServiceUrl: url
+                });
             })
             .catch(err => {
                 alert(err.message);
@@ -117,10 +138,12 @@ class LobbyIntrospectGUI extends React.Component {
         return (
             <div>
                 <div>
-                    {this.state.showHeader ? <LobbyIntrospectHeader instance={this.state.instance}/> : ''}
+                    {!this.state.dbckatMode ? <LobbyIntrospectHeader instance={this.state.instance}/> : ''}
                 </div>
                 <div>
                     <ApplicantsList
+                        dbckatMode={this.state.dbckatMode}
+                        lobbyServiceUrl={this.state.lobbyServiceUrl}
                         category={this.state.category}
                         applicationState={this.state.applicantState}
                         applicants={this.state.applicants}/>

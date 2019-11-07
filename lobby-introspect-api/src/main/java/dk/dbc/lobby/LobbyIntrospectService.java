@@ -37,11 +37,22 @@ public class LobbyIntrospectService {
     @ConfigProperty(name = "INSTANCE", defaultValue = "")
     private String INSTANCE;
 
+    @Inject
+    @ConfigProperty(name = "LOBBY_SERVICE_URL", defaultValue = "")
+    private String LOBBY_SERVICE_URL;
+
     @GET
     @Produces({MediaType.TEXT_PLAIN})
     @Path("v1/instance")
     public Response getInstance() {
         return Response.ok(INSTANCE).build();
+    }
+
+    @GET
+    @Produces({MediaType.TEXT_PLAIN})
+    @Path("v1/lobby")
+    public Response getLobbyServiceUrl() {
+        return Response.ok(LOBBY_SERVICE_URL).build();
     }
 
     @GET
