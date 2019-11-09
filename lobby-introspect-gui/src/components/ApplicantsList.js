@@ -22,7 +22,7 @@ class ApplicantsList extends React.Component {
     linkFormatterBody(cell) {
         let url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/body';
         if (this.props.dbckatMode) {
-            url = url.replace('http', 'dbckat')
+            url = 'dbckat-hent:' + url
         }
         return `<a href='${url}' target="_blank">Link</a>`
     }
@@ -30,7 +30,7 @@ class ApplicantsList extends React.Component {
     linkFormatterDelete(cell) {
         let url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/state';
         if (this.props.dbckatMode) {
-            url = url.replace('http', 'dbckat')
+            url = 'dbckat-slet:' + url;
         }
         return `<a href='${url}' target="_blank">Link</a>`
     }
