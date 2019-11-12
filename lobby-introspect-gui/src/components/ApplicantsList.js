@@ -24,7 +24,8 @@ class ApplicantsList extends React.Component {
         if (this.props.dbckatMode) {
             url = 'dbckat-get:' + url
         }
-        return `<a href='${url}' target="_blank">Link</a>`
+        return `<a href='${url}'>Link</a>`
+        // return `<a href='${url}' target="_blank">Link</a>`
     }
 
     linkFormatterDelete(cell) {
