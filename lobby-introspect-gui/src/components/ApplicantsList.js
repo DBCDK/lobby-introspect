@@ -25,7 +25,6 @@ class ApplicantsList extends React.Component {
             url = 'dbckat-get:' + url
         }
         return `<a href='${url}'>Link</a>`
-        // return `<a href='${url}' target="_blank">Link</a>`
     }
 
     linkFormatterDelete(cell) {
@@ -83,31 +82,41 @@ class ApplicantsList extends React.Component {
                     = <b>{this.props.applicationState}</b></p>
                 <BootstrapTable data={this.props.applicants}
                                 striped={true}
-                                options={{noDataText: 'Nope'}}>
+                                options={{noDataText: 'Indlæser...'}}
+                                bodyStyle={{overflow: 'overlay'}}>
                     <TableHeaderColumn dataField='id'
-                                       isKey={true}
-                                       dataSort>Id</TableHeaderColumn>
+                                       isKey
+                                       dataSort
+                                       width='100'>Id</TableHeaderColumn>
                     {this.props.category === '' ? // Hide category if a category is specified
-                        <TableHeaderColumn dataField='category'>Kategori</TableHeaderColumn> : null}
-                    <TableHeaderColumn dataField='state'>Status</TableHeaderColumn>
+                        <TableHeaderColumn dataField='category'
+                                           width='100'>Kategori</TableHeaderColumn> : null}
+                    <TableHeaderColumn dataField='state'
+                                       width='90'>Status</TableHeaderColumn>
                     <TableHeaderColumn dataField='timeOfLastModification'
                                        dataSort
-                                       dataFormat={this.dateFormatter}>Ajour</TableHeaderColumn>
+                                       dataFormat={this.dateFormatter}
+                                       width='160'>Ajour</TableHeaderColumn>
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
-                                           dataFormat={this.additionalInfoTitleIdFormatter}>Titel</TableHeaderColumn> : null}
+                                           dataFormat={this.additionalInfoTitleIdFormatter}
+                                           width='300'
+                                           tdStyle={{whiteSpace: 'normal'}}>Titel</TableHeaderColumn> : null}
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
-                                           dataFormat={this.additionalInfoOriginalId}>Original
-                            Id</TableHeaderColumn> : null}
+                                           dataFormat={this.additionalInfoOriginalId}
+                                           width='150'>Original Id</TableHeaderColumn> : null}
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
-                                           dataFormat={this.additionalInfoErrorsFormatter}>Fejl</TableHeaderColumn> : null}
+                                           dataFormat={this.additionalInfoErrorsFormatter}
+                                           tdStyle={{whiteSpace: 'normal'}}>Fejl</TableHeaderColumn> : null}
                     <TableHeaderColumn dataField='id'
-                                       dataFormat={this.linkFormatterBody}>Post</TableHeaderColumn>
+                                       dataFormat={this.linkFormatterBody}
+                                       width='75'>Post</TableHeaderColumn>
                     {this.props.dbckatMode ?
-                    <TableHeaderColumn dataField='id'
-                                       dataFormat={this.linkFormatterDelete}>Slet</TableHeaderColumn> : null }
+                        <TableHeaderColumn dataField='id'
+                                           dataFormat={this.linkFormatterDelete}
+                                           width='75'>Slet</TableHeaderColumn> : null}
                 </BootstrapTable>
             </div>
         )
