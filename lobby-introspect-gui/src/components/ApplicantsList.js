@@ -20,19 +20,26 @@ class ApplicantsList extends React.Component {
     }
 
     linkFormatterBody(cell) {
-        let url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/body';
+        let url;
         if (this.props.dbckatMode) {
-            url = 'dbckat-get:' + url
+            url= 'dbckat-get:' + cell;
+        } else {
+            url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/body';
         }
+
         return `<a href='${url}'>Link</a>`
     }
 
     linkFormatterDelete(cell) {
-        let url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/state';
+        let url;
         if (this.props.dbckatMode) {
-            url = 'dbckat-setstate:' + url;
+            url= 'dbckat-setstate:' + cell;
+        } else {
+            // This isn't really necessary as delete link is only shown in dbckat mode
+            url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/state';
         }
-        return `<a href='${url}' target="_blank">Link</a>`
+
+        return `<a href='${url}'>Link</a>`
     }
 
     additionalInfoTitleIdFormatter(cell) {
