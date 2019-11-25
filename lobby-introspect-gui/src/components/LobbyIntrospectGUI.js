@@ -38,7 +38,7 @@ class LobbyIntrospectGUI extends React.Component {
             category = this.state.category;
         }
 
-        let applicantState = queryParams.state;
+        let applicantState = queryParams.state.toUpperCase();
         if (applicantState === undefined) {
             applicantState = this.state.applicantState;
         }
