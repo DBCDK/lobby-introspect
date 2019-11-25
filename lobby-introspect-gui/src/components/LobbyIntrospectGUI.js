@@ -38,7 +38,7 @@ class LobbyIntrospectGUI extends React.Component {
             category = this.state.category;
         }
 
-        let applicantState = queryParams.state;
+        let applicantState = queryParams.state.toUpperCase();
         if (applicantState === undefined) {
             applicantState = this.state.applicantState;
         }
@@ -145,7 +145,7 @@ class LobbyIntrospectGUI extends React.Component {
                         dbckatMode={this.state.dbckatMode}
                         lobbyServiceUrl={this.state.lobbyServiceUrl}
                         category={this.state.category}
-                        applicationState={this.state.applicantState}
+                        applicantState={this.state.applicantState}
                         applicants={this.state.applicants}/>
                 </div>
             </div>
