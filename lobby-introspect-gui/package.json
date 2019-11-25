@@ -2,11 +2,11 @@
   "name": "lobby-introspect-gui",
   "version": "0.0.1",
   "dependencies": {
-    "react": "^16.8.6",
+    "react": "^16.12.0",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-table": "^4.3.1",
-    "react-dom": "^16.8.6",
-    "superagent": "^5.1.0"
+    "react-dom": "^16.12.0",
+    "superagent": "^5.1.1"
   },
   "license": "GPL-3.0",
   "scripts": {
