@@ -145,7 +145,7 @@ class LobbyIntrospectGUI extends React.Component {
                         dbckatMode={this.state.dbckatMode}
                         lobbyServiceUrl={this.state.lobbyServiceUrl}
                         category={this.state.category}
-                        applicationState={this.state.applicantState}
+                        applicantState={this.state.applicantState}
                         applicants={this.state.applicants}/>
                 </div>
             </div>

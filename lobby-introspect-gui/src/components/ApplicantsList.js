@@ -86,7 +86,7 @@ class ApplicantsList extends React.Component {
         return (
             <div>
                 <p>Filter: Kategori = <b>{this.props.category === '' ? 'Alle' : this.props.category}</b> | Status
-                    = <b>{this.props.applicationState}</b></p>
+                    = <b>{this.props.applicantState}</b> | Antal poster: <b>{this.props.applicants.length}</b></p>
                 <BootstrapTable data={this.props.applicants}
                                 striped={true}
                                 options={{noDataText: 'Indlæser...'}}
