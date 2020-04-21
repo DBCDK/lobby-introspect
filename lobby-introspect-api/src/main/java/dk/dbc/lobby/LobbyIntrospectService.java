@@ -60,6 +60,7 @@ public class LobbyIntrospectService {
     @Path("v1/applicants")
     public Response getApplicants(@QueryParam("category") String category,
                                   @DefaultValue("PENDING") @QueryParam("state") String state) {
+        LOGGER.info("v1/applicants?category={}&state={}", category, state);
         String res;
 
         try {
