@@ -143,6 +143,16 @@ class LobbyIntrospectGUI extends React.Component {
                     {!this.state.dbckatMode ? <LobbyIntrospectHeader instance={this.state.instance}/> : ''}
                 </div>
                 <div>
+                    {!this.state.dbckatMode ? <p>Visning af poster kan styres ved hjælp af url parameter.<br/>
+                    Kategori styres af "category", og status styres af "state".<br/><br/>
+                    Hvis category har en værdi begrænset søgning til den kategori. Lige nu er eneste understøttede kategori "dpf"<br/>
+                    State kan have en af værdierne: ACCEPTED, PENDING.<br/><br/>
+                    Eksempel: "?category=dpf&state=ACCEPTED"<br/>
+                        <hr/>
+
+                    </p> : ''}
+                </div>
+                <div>
                     <ApplicantsList
                         dbckatMode={this.state.dbckatMode}
                         lobbyServiceUrl={this.state.lobbyServiceUrl}
