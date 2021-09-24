@@ -17,8 +17,8 @@ class ApplicantsList extends React.Component {
         this.additionalInfoTitleIdFormatter = this.additionalInfoTitleIdFormatter.bind(this);
         this.additionalInfoErrorsFormatter = this.additionalInfoErrorsFormatter.bind(this);
         this.additionalInfoOriginalIdFormatter = this.additionalInfoOriginalIdFormatter.bind(this);
-        this.additionalInfoNameFormatter = this.additionalInfoNameFormatter(this);
-        this.additionalInfoAddressFormatter = this.additionalInfoAddressFormatter(this);
+        this.additionalInfoNameFormatter = this.additionalInfoNameFormatter.bind(this);
+        this.additionalInfoAddressFormatter = this.additionalInfoAddressFormatter.bind(this);
     }
 
     linkFormatterBody(cell) {
