@@ -16,13 +16,15 @@ class ApplicantsList extends React.Component {
         this.dateFormatter = this.dateFormatter.bind(this);
         this.additionalInfoTitleIdFormatter = this.additionalInfoTitleIdFormatter.bind(this);
         this.additionalInfoErrorsFormatter = this.additionalInfoErrorsFormatter.bind(this);
-        this.additionalInfoOriginalId = this.additionalInfoOriginalId.bind(this);
+        this.additionalInfoOriginalIdFormatter = this.additionalInfoOriginalIdFormatter.bind(this);
+        this.additionalInfoNameFormatter = this.additionalInfoNameFormatter(this);
+        this.additionalInfoAddressFormatter = this.additionalInfoAddressFormatter(this);
     }
 
     linkFormatterBody(cell) {
         let url;
         if (this.props.dbckatMode) {
-            url= 'dbckat-get:' + cell;
+            url = 'dbckat-get:' + cell;
         } else {
             url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/body';
         }
@@ -33,7 +35,7 @@ class ApplicantsList extends React.Component {
     linkFormatterDelete(cell) {
         let url;
         if (this.props.dbckatMode) {
-            url= 'dbckat-setstate:' + cell;
+            url = 'dbckat-setstate:' + cell;
         } else {
             // This isn't really necessary as delete link is only shown in dbckat mode
             url = this.props.lobbyServiceUrl + '/v1/api/applicants/' + cell + '/state';
@@ -58,9 +60,25 @@ class ApplicantsList extends React.Component {
         }
     }
 
-    additionalInfoOriginalId(cell) {
+    additionalInfoOriginalIdFormatter(cell) {
         if (cell !== undefined && cell.originalRecordId !== undefined) {
             return cell.originalRecordId;
+        } else {
+            return '';
+        }
+    }
+
+    additionalInfoNameFormatter(cell) {
+        if (cell !== undefined && cell.name !== undefined) {
+            return cell.name;
+        } else {
+            return '';
+        }
+    }
+
+    additionalInfoAddressFormatter(cell) {
+        if (cell !== undefined && cell.address !== undefined) {
+            return cell.address;
         } else {
             return '';
         }
@@ -80,7 +98,7 @@ class ApplicantsList extends React.Component {
             ' ' + leftPad2(dateValue.getHours()) +
             ':' + leftPad2(dateValue.getMinutes()) +
             ':' + leftPad2(dateValue.getSeconds());
-    };
+    }
 
     render() {
         return (
@@ -104,6 +122,7 @@ class ApplicantsList extends React.Component {
                                        dataSort
                                        dataFormat={this.dateFormatter}
                                        width='160'>Ajour</TableHeaderColumn>
+
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
                                            dataFormat={this.additionalInfoTitleIdFormatter}
@@ -111,12 +130,22 @@ class ApplicantsList extends React.Component {
                                            tdStyle={{whiteSpace: 'normal'}}>Titel</TableHeaderColumn> : null}
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
-                                           dataFormat={this.additionalInfoOriginalId}
+                                           dataFormat={this.additionalInfoOriginalIdFormatter}
                                            width='150'>Original Id</TableHeaderColumn> : null}
                     {this.props.category === 'dpf' ?
                         <TableHeaderColumn dataField='additionalInfo'
                                            dataFormat={this.additionalInfoErrorsFormatter}
                                            tdStyle={{whiteSpace: 'normal'}}>Fejl</TableHeaderColumn> : null}
+
+                    {this.props.category === 'forlag' ?
+                        <TableHeaderColumn dataField='additionalInfo'
+                                           dataFormat={this.additionalInfoNameFormatter}
+                                           tdStyle={{whiteSpace: 'normal'}}>Navn</TableHeaderColumn> : null}
+                    {this.props.category === 'forlag' ?
+                        <TableHeaderColumn dataField='additionalInfo'
+                                           dataFormat={this.additionalInfoAddressFormatter}
+                                           tdStyle={{whiteSpace: 'normal'}}>Adresse</TableHeaderColumn> : null}
+
                     <TableHeaderColumn dataField='id'
                                        dataFormat={this.linkFormatterBody}
                                        width='75'>Post</TableHeaderColumn>
