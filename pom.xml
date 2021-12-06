@@ -29,7 +29,7 @@
         <frontend.maven.plugin.version>1.4</frontend.maven.plugin.version>
         <maven.install.plugin.version>2.5.2</maven.install.plugin.version>
         <maven.javadoc.plugin.version>2.10.1</maven.javadoc.plugin.version>
-        <maven.surefire.version>2.20.1</maven.surefire.version>
+        <maven.surefire.version>2.19.1</maven.surefire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skip.install>true</skip.install>
@@ -88,9 +88,12 @@
             <artifactId>hamcrest</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.microprofile</groupId>
-            <artifactId>microprofile</artifactId>
-            <type>pom</type>
+            <groupId>org.eclipse.microprofile.config</groupId>
+            <artifactId>microprofile-config-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile.health</groupId>
+            <artifactId>microprofile-health-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
