@@ -80,7 +80,7 @@ pipeline {
             agent {
                 docker {
                     label workerNode
-                    image "docker.dbc.dk/build-env:latest"
+                    image "docker-metascrum.artifacts.dbccloud.dk/build-env:latest"
                     alwaysPull true
                 }
             }
