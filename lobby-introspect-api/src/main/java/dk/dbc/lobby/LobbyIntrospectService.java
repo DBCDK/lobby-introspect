@@ -1,34 +1,28 @@
-/*
- * Copyright Dansk Bibliotekscenter a/s. Licensed under GPLv3
- * See license text in LICENSE.txt or at https://opensource.dbc.dk/licenses/gpl-3.0/
- */
-
 package dk.dbc.lobby;
 
-import dk.dbc.jsonb.JSONBContext;
-import dk.dbc.jsonb.JSONBException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.dbc.util.StopwatchInterceptor;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.interceptor.Interceptors;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.interceptor.Interceptors;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 @Interceptors(StopwatchInterceptor.class)
 @Stateless
 @Path("")
 public class LobbyIntrospectService {
     private static final Logger LOGGER = LoggerFactory.getLogger(LobbyIntrospectService.class);
-    private final JSONBContext mapper = new JSONBContext();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Inject
     LobbyConnector lobbyConnector;
@@ -77,10 +71,10 @@ public class LobbyIntrospectService {
 
             final Applicant[] applicants = lobbyConnector.getApplicants(params);
 
-            res = mapper.marshall(applicants);
+            res = mapper.writeValueAsString(applicants);
 
             return Response.ok(res, MediaType.APPLICATION_JSON).build();
-        } catch (JSONBException | LobbyConnectorException e) {
+        } catch (JsonProcessingException | LobbyConnectorException e) {
             LOGGER.error(e.getMessage());
             return Response.serverError().build();
         }
